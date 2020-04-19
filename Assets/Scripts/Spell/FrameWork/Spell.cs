@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spell : ScriptableObject
+public abstract class Spell : MonoBehaviour
 {
-    public SpellTypes.SpellType SpellType { get; set; }
+    public abstract SpellTypes.SpellType SpellType { get; set; }
     
-    public int ManaCost { get; set; }
-    /// <summary>
-    /// Default Damage
-    /// </summary>
-    public float Damage { get; set; }
+    public abstract int ManaCost { get; set; }
+    public abstract float Damage { get; set; }
+    public abstract void Cast();
 
-    public void Cast()
-    { 
 
-    }
+
+
 }

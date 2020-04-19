@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Raycast Spell", menuName = "Spells/Raycast")]
-public class Spell_Raycast : Spell
+//[CreateAssetMenu(fileName = "Raycast Spell", menuName = "Spells/Raycast")]
+public abstract class Spell_Raycast : Spell
 {
-    public float DamageOverride;
     private Transform castPoint { get; set; }
 
     private void Awake()
@@ -24,12 +23,11 @@ public class Spell_Raycast : Spell
         this.castPoint = castPoint;
     }
 
-    public void Cast()
+    public RaycastHit2D? CastRay()
     {
         if (castPoint != null)
         {
             Vector2 origin = new Vector2(castPoint.position.x, castPoint.position.y);
-            
 
             RaycastHit2D hit = Physics2D.Raycast(origin, castPoint.up);
             Debug.DrawLine(origin, hit.point);
@@ -39,9 +37,13 @@ public class Spell_Raycast : Spell
                 Target target = hit.transform.GetComponent<Target>();
                 if(target != null)
                 {
-                    target.TakeDamage(DamageOverride);
+
+                    ApplyDamage();
                 }
             }
         }
+        return null;
     }
+
+    public abstract void ApplyDamage();
 }
