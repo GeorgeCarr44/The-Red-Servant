@@ -23,6 +23,7 @@ public class PlayerMovementController : MonoBehaviour
 
         controls.Gameplay.PrimarySpell.performed += ctx => PrimaryInvoke(); //call spells from spell management
         controls.Gameplay.SecondarySpell.performed += ctx => SecondaryInvoke();
+        controls.Gameplay.Movement.canceled += ctx => MovementDirection = Vector2.zero;
         controls.Gameplay.Movement.performed += ctx => MovementDirection = ctx.ReadValue<Vector2>();
         controls.Gameplay.Movement.canceled += ctx => MovementDirection = Vector2.zero;
         controls.Gameplay.Look.performed += ctx => AimDirection = ctx.ReadValue<Vector2>();
@@ -56,10 +57,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PrimaryInvoke()
     {
-
+        Debug.Log("PrimaryInvoke");
         if (PrimarySpell != null)
         {
-            PrimarySpell();
+            Debug.Log("has spell");
+            PrimarySpell.Cast();
         }
         else
         {
@@ -70,15 +72,15 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void SecondaryInvoke()
     {
-        if (secondarySpell != null)
-        {
-            secondarySpell.Cast();
-        }
-        else
-        {
-            //Play poof noise and effect
-            throw new NotImplementedException();
-        }
+        //if (secondarySpell != null)
+        //{
+        //    //secondarySpell.Cast();
+        //}
+        //else
+        //{
+        //    //Play poof noise and effect
+        //    throw new NotImplementedException();
+        //}
 
     }
 

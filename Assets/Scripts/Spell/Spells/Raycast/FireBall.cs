@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//public class FireBall : Spell_Raycast
 public class FireBall : Spell_Raycast
 {
-
-    //why do i need a constructor
     //get set types arent visable in the editor, how do i fix this??
 
-    public override int ManaCost { get; set; }
-    public override float Damage { get; set; }
-
-public override void ApplyDamage()
+    public override void ApplyDamage(Target t)
     {
-        throw new System.NotImplementedException();
+        t.TakeDamage(10);
     }
 
     public override void Cast()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("cast");
+        CastRay();
     }
 }
