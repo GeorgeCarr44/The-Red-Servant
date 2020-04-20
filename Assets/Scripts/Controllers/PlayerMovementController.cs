@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
@@ -14,20 +13,20 @@ public class PlayerMovementController : MonoBehaviour
     public Vector2 MovementDirection { get; private set; }
     public Vector2 AimDirection { get; private set; }
 
-    private PS4Controls controls;
+    private GameControls controls;
     private Rigidbody2D rb;
     private PlayerAnimator playerAnimator;
     private void Awake()
     {
-        controls = new PS4Controls();
+        controls = new GameControls();
 
-        controls.Gameplay.PrimarySpell.performed += ctx => PrimaryInvoke(); //call spells from spell management
-        controls.Gameplay.SecondarySpell.performed += ctx => SecondaryInvoke();
-        controls.Gameplay.Movement.canceled += ctx => MovementDirection = Vector2.zero;
-        controls.Gameplay.Movement.performed += ctx => MovementDirection = ctx.ReadValue<Vector2>();
-        controls.Gameplay.Movement.canceled += ctx => MovementDirection = Vector2.zero;
-        controls.Gameplay.Look.performed += ctx => AimDirection = ctx.ReadValue<Vector2>();
-        controls.Gameplay.Look.canceled += ctx => AimDirection = Vector2.zero;
+        controls.Player.CastPrimary.performed += ctx => PrimaryInvoke(); //call spells from spell management
+        controls.Player.CastSecondary.performed += ctx => SecondaryInvoke();
+        controls.Player.Move.canceled += ctx => MovementDirection = Vector2.zero;
+        controls.Player.Move.performed += ctx => MovementDirection = ctx.ReadValue<Vector2>();
+        controls.Player.Move.canceled += ctx => MovementDirection = Vector2.zero;
+        controls.Player.Look.performed += ctx => AimDirection = ctx.ReadValue<Vector2>();
+        controls.Player.Look.canceled += ctx => AimDirection = Vector2.zero;
     }
 
     private void Start()
@@ -72,24 +71,24 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void SecondaryInvoke()
     {
-        //if (secondarySpell != null)
-        //{
-        //    //secondarySpell.Cast();
-        //}
-        //else
-        //{
-        //    //Play poof noise and effect
-        //    throw new NotImplementedException();
-        //}
+        if (SecondarySpell != null)
+        {
+            SecondarySpell.Cast();
+        }
+        else
+        {
+            //Play poof noise and effect
+            throw new NotImplementedException();
+        }
 
     }
 
     private void OnEnable()
     {
-        controls.Gameplay.Enable();
+        controls.Player.Enable();
     }
     private void OnDisable()
     {
-        controls.Gameplay.Disable();
+        controls.Player.Disable();
     }
 }

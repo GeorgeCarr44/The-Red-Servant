@@ -11,11 +11,13 @@ public abstract class Spell : MonoBehaviour
     public int ManaCost { get; set; }
     [SerializeField]
     public float Damage { get; set; }
-    public abstract void Cast();
+    public virtual void Cast() {
+        Debug.Log("Base cast");
 
-    private void Awake()
+    }
+
+    void Start()
     {
         castPoint = transform.Find("CastPoint");
-        Debug.Log(transform.FindChild("CastPoint"));
     }
 }
